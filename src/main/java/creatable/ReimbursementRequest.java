@@ -28,6 +28,8 @@ public class ReimbursementRequest {
 		this.description = description;
 	}
 	
+	public ReimbursementRequest() {}
+	
 	public String getEmployeeEmail() {
 		return employeeEmail;
 	}
@@ -51,6 +53,9 @@ public class ReimbursementRequest {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public void setRequestID(int requestID) {
+		this.requestID = requestID;
 	}
 	public int getRequestID() {
 		return requestID;

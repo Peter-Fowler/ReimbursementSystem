@@ -1,0 +1,35 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title>Login for service</title>
+	<h2>Welcom Back</h2>
+	<link rel="stylesheet" href="./ReimbursementTable.css">
+</head>
+<body id="wholeWindow">
+	
+	<form method="POST" action="/ReimbursementSystem/login">
+	<table align="center" cellpadding="10">
+	
+		<tr>
+			<th>User Name:</th>
+		<td>
+			<input type="text" name="email" maxlength="50" autofocus required>
+		</td>
+		</tr>
+	
+		<tr>
+			<th>Password:</th>
+			<td>
+				<input type="password" name="password" maxlength="45" required>
+			</td>
+		</tr>
+	
+		<tr>
+			<td colspan="2" align="center">
+			<input type="submit" value="Submit"> <!-- onclick="login.js" -->
+			</td>
+		</tr>
+	</table>
+	</form>
+</body>
+</html>

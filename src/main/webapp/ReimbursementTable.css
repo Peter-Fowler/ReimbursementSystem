@@ -1,0 +1,24 @@
+#wholeWindow{
+    background-color: #ebfaff;
+}
+.flex-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+#bordertable{
+    border: 2px solid black;
+}
+.logoutbutton{
+    position: absolute;
+    top: 5%;
+    right: 3%;
+}
+#NewRequest{
+    display: flex;
+    align-items: flex-end;
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 10px;
+}

@@ -2,11 +2,13 @@ package system;
 
 import java.util.List;
 import creatable.Employee;
+import creatable.ReimbursementDecided;
+import creatable.ReimbursementRequest;
 
-public interface ReimbursementServiceLevelOne<T> {
+public interface ReimbursementServiceLevelOne {
 
-	public void submitReimbursementRequest();
-	public List<T> rendingReimbursementRequests();
-	public List<T> resolvedReimbursementRequests();
+	public ReimbursementRequest createReimbursementRequest(Employee fred, double amount, String description);
+	public List<ReimbursementRequest> getReimbursementRequests();
+	public List<ReimbursementDecided> getResolvedReimbursementRequests(Employee fred);
 	
 }

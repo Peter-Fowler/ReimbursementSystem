@@ -14,17 +14,26 @@ public class ConnectionUtil {
 		FileInputStream fis = null;
 		Connection con = null;
 		try {
-			fis = new FileInputStream("db.properties");
-			props.load(fis);
+			//fis = new FileInputStream("db.properties");
+			//props.load(fis);
 
 			// load the Driver Class
-			Class.forName(props.getProperty("DB_DRIVER_CLASS"));
-
+			//Class.forName(props.getProperty("DB_DRIVER_CLASS"));
+			
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			
 			// create the connection now
-			con = DriverManager.getConnection(props.getProperty("DB_URL"),
-					props.getProperty("DB_USERNAME"),
-					props.getProperty("DB_PASSWORD"));
-		} catch (IOException | ClassNotFoundException | SQLException e) {
+			/*
+			 * con = DriverManager.getConnection(props.getProperty("DB_URL"),
+			 * props.getProperty("DB_USERNAME"), props.getProperty("DB_PASSWORD"));
+			 */
+			
+			  con = DriverManager.getConnection(
+			  "jdbc:oracle:thin:@id.ciukb8h6e6pf.us-east-1.rds.amazonaws.com:1521:MONEYDB",
+			  "admin", "admin123");
+			 
+					
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 		

@@ -20,12 +20,12 @@ public class ReimbursementDecided {
 		this.requestID = requestID;
 	}
 
-	public ReimbursementDecided(String managerEmail, LocalDateTime date, boolean approved, int decisionID) {
+	public ReimbursementDecided(String managerEmail, LocalDateTime date, boolean approved, int requestID) {
 		super();
 		this.managerEmail = managerEmail;
 		this.date = date;
 		this.approved = approved;
-		this.decisionID = decisionID;
+		this.requestID = requestID;
 	}
 
 	public ReimbursementDecided() {}
@@ -62,8 +62,18 @@ public class ReimbursementDecided {
 		this.decisionID = decisionID;
 	}
 
+	public void setRequestID(int requestID) {
+		this.requestID = requestID;
+	}
+	
 	public int getRequestID() {
 		return requestID;
+	}
+
+	@Override
+	public String toString() {
+		return "ReimbursementDecided [managerEmail=" + managerEmail + ", date=" + date + ", approved=" + approved
+				+ ", decisionID=" + decisionID + ", requestID=" + requestID + "]";
 	}
 	
 	

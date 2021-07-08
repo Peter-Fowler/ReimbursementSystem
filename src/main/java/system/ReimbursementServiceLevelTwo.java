@@ -1,13 +1,13 @@
 package system;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public interface ReimbursementServiceLevelTwo<T> {
+public interface ReimbursementServiceLevelTwo<T, X, E> {
 
-	public void judgeReimbursementRequest();
-	public List<T> viewReimbursementRequests();
-	public List<T> viewJudgedReimbursementRequests();
-	public List<T> viewAllEmployees();
-	public List<T> viewReimbursementRequestsByEmployee(T t);
-	public void registerEmployee();
+	public void judgeReimbursementRequest(T t, E e, boolean tf);
+	public ArrayList<X> viewReimbursementDecided();
+	public ArrayList<E> viewAllEmployees();
+	public ArrayList<T> viewReimbursementRequestsByEmployee(E e);
+	public void registerEmployee(E e);
 }
+
