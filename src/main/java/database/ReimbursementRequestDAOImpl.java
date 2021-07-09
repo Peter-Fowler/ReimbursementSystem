@@ -41,14 +41,14 @@ public class ReimbursementRequestDAOImpl implements SystemDAO<ReimbursementReque
 	}
 
 	@Override
-	public ArrayList<ReimbursementRequest> get(String requestID) {
-		String query = "SELECT requestID, employeeEmail, dateSubmited, amount, description FROM reimbursementRequest WHERE requestID = ?";
+	public ArrayList<ReimbursementRequest> get(String fredEmail) {
+		String query = "SELECT requestID, employeeEmail, dateSubmited, amount, description FROM reimbursementRequest WHERE employeeEmail = ?";
 		ArrayList<ReimbursementRequest> request = new ArrayList<ReimbursementRequest>();
 		try(Connection conn = ConnectionUtil.getConnection();
 				PreparedStatement ps = conn.prepareStatement(query)){
 			
-			int id = Integer.parseInt(requestID);
-			ps.setInt(1, id);
+			
+			ps.setString(1, fredEmail);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -57,16 +57,14 @@ public class ReimbursementRequestDAOImpl implements SystemDAO<ReimbursementReque
 				Timestamp ts = rs.getTimestamp("dateSubmited");
 				double amount = rs.getDouble("amount");
 				String description = rs.getString("description");
+				int requestID = rs.getInt("requestID");
 				LocalDateTime date = ts.toLocalDateTime();
-				request.add(new ReimbursementRequest(employeeEmail, date, amount, description, id));
+				request.add(new ReimbursementRequest(employeeEmail, date, amount, description, requestID));
 			}
 			return request;
 			
 		}catch(SQLException e) {
 			System.out.println("Failer to get reimbursement request by ID " + e.getMessage());
-		}catch(NumberFormatException e) {
-			System.out.println(requestID + " is not a valid number.");
-			System.out.println(e.getMessage());
 		}
 		return null;
 	}

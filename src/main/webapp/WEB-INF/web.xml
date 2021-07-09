@@ -20,6 +20,11 @@
   	<servlet-class>web.ManagerView</servlet-class>
   </servlet>
   
+  <servlet>
+  	<servlet-name>LogoutPage</servlet-name>
+  	<servlet-class>web.LogoutServlet</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
   	<servlet-name>LoginPage</servlet-name>
   	<url-pattern>/login</url-pattern>
@@ -30,9 +35,14 @@
 	<url-pattern>/Reimbursements</url-pattern>
   </servlet-mapping>
 	
-	<servlet-mapping>
-		<servlet-name>ManagerView</servlet-name>
-		<url-pattern>/ManagerPortal</url-pattern>
-	</servlet-mapping>
+  <servlet-mapping>
+	<servlet-name>ManagerView</servlet-name>
+	<url-pattern>/ManagerPortal</url-pattern>
+  </servlet-mapping>
+	
+  <servlet-mapping>
+    <servlet-name>LogoutPage</servlet-name>
+  	<url-pattern>/logout</url-pattern>
+  </servlet-mapping>
 	
 </web-app>

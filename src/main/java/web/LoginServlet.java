@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import system.ReimbursementServiceImpl;
 
@@ -34,6 +36,8 @@ public class LoginServlet extends HttpServlet {
 
 		res.setContentType("text/html");
 		
+		HttpSession session = req.getSession();
+		
 		String page = "";
 		  if(req.getParameterMap().containsKey("password")) { 
 			  String pass = req.getParameter("password"); 
@@ -42,7 +46,8 @@ public class LoginServlet extends HttpServlet {
 			  Employee fred = rsi.login(email, pass); 
 		  
 			  if(fred != null) {
-				  System.out.println(fred.toString());
+				  session.setAttribute("fred", fred);
+				  
 				  if(fred.isManagerStatus()) {
 					  page = "./ManagerPortal";
 				  }else {
