@@ -56,12 +56,18 @@ class Requests {
 
     let requestList = [];
 
+    requestList.push(testRequest);
+
+    console.log(requestList);
+
     const appRoot = document.querySelector('#wholeWindow');
     const requestContainer = appRoot.querySelector('#requestTableRow');
 
-    const renderRequestTableData = () => {
-        requestContainer.innerHTML = '';
+    const renderRequestTableData = (container) => {
+        console.log('In the renderRequestTableData function');
+        container.innerHTML = '';
         requestList.forEach(r => {
+            console.log('In the forEach function');
             const newRequest = document.createElement('tr');
             const rDate = document.createElement('td');
             const rAmount = document.createElement('td');
@@ -77,9 +83,13 @@ class Requests {
             newRequest.append(rAmount);
             newRequest.append(rDescription);
             newRequest.append(rStatus);
-            return newRequest;
+            
+            container.append(newRequest);
         });
     }
+
+    console.log('Right before the renderRequestTableData function call');
+    renderRequestTableData(requestContainer);
 
 /* document.addEventListener('DOMContentLoaded', () => {
     fetch('')
