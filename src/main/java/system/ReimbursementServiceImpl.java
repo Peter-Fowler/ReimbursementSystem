@@ -1,6 +1,7 @@
 package system;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import creatable.Employee;
@@ -21,17 +22,14 @@ ReimbursementServiceLevelTwo<ReimbursementRequest, ReimbursementDecided, Employe
 	
 	
 	
-	@Override
-	public ReimbursementRequest createReimbursementRequest(Employee fred, double amount, String description) {
+	@Override // In testing mode
+	public void createReimbursementRequest(Employee fred, double amount, String description) {
 		
-		LocalDateTime date = LocalDateTime.now();
+		String date = catchTime();
 		
 		ReimbursementRequest request = new ReimbursementRequest(fred.getEmail(), date, amount, description);
 		
 		rrdaoi.save(request);
-		
-		
-		return null;
 	}
 
 	@Override
@@ -49,7 +47,7 @@ ReimbursementServiceLevelTwo<ReimbursementRequest, ReimbursementDecided, Employe
 	@Override
 	public void judgeReimbursementRequest(ReimbursementRequest request, Employee bigFred, boolean tf) {
 		
-		LocalDateTime date = LocalDateTime.now();
+		String date =  catchTime();
 		
 		ReimbursementDecided decided = new ReimbursementDecided(bigFred.getEmail(), date,
 				tf, request.getRequestID());
@@ -92,6 +90,14 @@ ReimbursementServiceLevelTwo<ReimbursementRequest, ReimbursementDecided, Employe
 		return null;
 	}
 
-
+	public static String catchTime() {
+		LocalDateTime date = LocalDateTime.now();
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm:ss");
+		
+		String now = date.format(formatter);
+				
+		return now;
+	}
 
 }

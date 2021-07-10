@@ -16,6 +16,11 @@
   </servlet>
   
   <servlet>
+  	<servlet-name>EmployeeDecidedView</servlet-name>
+  	<servlet-class>web.EmployeeDecidedView</servlet-class>
+  </servlet>
+  
+  <servlet>
   	<servlet-name>ManagerView</servlet-name>
   	<servlet-class>web.ManagerView</servlet-class>
   </servlet>
@@ -33,6 +38,11 @@
   <servlet-mapping>
   	<servlet-name>EmployeeView</servlet-name>
 	<url-pattern>/Reimbursements</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>EmployeeDecidedView</servlet-name>
+  	<url-pattern>/EmployeeDecided</url-pattern>
   </servlet-mapping>
 	
   <servlet-mapping>

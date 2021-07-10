@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import creatable.ReimbursementRequest;
 
@@ -26,10 +24,9 @@ public class ReimbursementRequestDAOImpl implements SystemDAO<ReimbursementReque
 			while(rs.next()) {
 				int requestID = rs.getInt("requestID");
 				String employeeEmail = rs.getString("employeeEmail");
-				Timestamp ts = rs.getTimestamp("dateSubmited");
+				String date  = rs.getString("dateSubmited");
 				double amount = rs.getDouble("amount");
 				String description = rs.getString("description");
-				LocalDateTime date = ts.toLocalDateTime();
 				allReimRequests.add(new ReimbursementRequest(employeeEmail, date, amount, description, requestID));
 			}
 			return allReimRequests;
@@ -54,11 +51,10 @@ public class ReimbursementRequestDAOImpl implements SystemDAO<ReimbursementReque
 			
 			while(rs.next()) {
 				String employeeEmail = rs.getString("employeeEmail");
-				Timestamp ts = rs.getTimestamp("dateSubmited");
+				String date = rs.getString("dateSubmited");
 				double amount = rs.getDouble("amount");
 				String description = rs.getString("description");
 				int requestID = rs.getInt("requestID");
-				LocalDateTime date = ts.toLocalDateTime();
 				request.add(new ReimbursementRequest(employeeEmail, date, amount, description, requestID));
 			}
 			return request;
@@ -78,7 +74,7 @@ public class ReimbursementRequestDAOImpl implements SystemDAO<ReimbursementReque
 		try(Connection conn = ConnectionUtil.getConnection();
 				PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, request.getEmployeeEmail());
-			ps.setTimestamp(2, Timestamp.valueOf(request.getDate()));
+			ps.setString(2, request.getDate());
 			ps.setDouble(3, request.getAmount());
 			ps.setString(4, request.getDescription());
 			ps.setInt(5, request.getRequestID());
@@ -131,7 +127,7 @@ public class ReimbursementRequestDAOImpl implements SystemDAO<ReimbursementReque
 		try(Connection conn = ConnectionUtil.getConnection();
 				PreparedStatement ps = conn.prepareStatement(query)){
 			ps.setString(1, request.getEmployeeEmail());
-			ps.setTimestamp(2, Timestamp.valueOf(request.getDate()));
+			ps.setString(2, request.getDate());
 			ps.setDouble(3, request.getAmount());
 			ps.setString(4, request.getDescription());
 			

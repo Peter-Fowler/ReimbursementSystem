@@ -1,16 +1,14 @@
 package creatable;
 
-import java.time.LocalDateTime;
-
 public class ReimbursementDecided {
 
 	String managerEmail;
-	LocalDateTime date;
+	String date;
 	boolean approved;
 	int decisionID;
 	int requestID;
 	
-	public ReimbursementDecided(String managerEmail, LocalDateTime date, boolean approved, int decisionID,
+	public ReimbursementDecided(String managerEmail, String date, boolean approved, int decisionID,
 			int requestID) {
 		super();
 		this.managerEmail = managerEmail;
@@ -20,7 +18,7 @@ public class ReimbursementDecided {
 		this.requestID = requestID;
 	}
 
-	public ReimbursementDecided(String managerEmail, LocalDateTime date, boolean approved, int requestID) {
+	public ReimbursementDecided(String managerEmail, String date, boolean approved, int requestID) {
 		super();
 		this.managerEmail = managerEmail;
 		this.date = date;
@@ -38,11 +36,11 @@ public class ReimbursementDecided {
 		this.managerEmail = managerEmail;
 	}
 
-	public LocalDateTime getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

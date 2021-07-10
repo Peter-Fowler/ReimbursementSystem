@@ -1,16 +1,16 @@
 package creatable;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ReimbursementRequest {
 
 	String employeeEmail;
-	LocalDateTime date;
+	String date;
 	double amount;
 	String description;
 	int requestID;
 	
-	public ReimbursementRequest(String employeeEmail, LocalDateTime date, double amount, String description,
+	public ReimbursementRequest(String employeeEmail, String date, double amount, String description,
 			int requestID) {
 		super();
 		this.employeeEmail = employeeEmail;
@@ -20,7 +20,7 @@ public class ReimbursementRequest {
 		this.requestID = requestID;
 	}
 
-	public ReimbursementRequest(String employeeEmail, LocalDateTime date, double amount, String description) {
+	public ReimbursementRequest(String employeeEmail, String date, double amount, String description) {
 		super();
 		this.employeeEmail = employeeEmail;
 		this.date = date;
@@ -36,10 +36,10 @@ public class ReimbursementRequest {
 	public void setEmployeeEmail(String employeeEmail) {
 		this.employeeEmail = employeeEmail;
 	}
-	public LocalDateTime getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(LocalDateTime date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	public double getAmount() {

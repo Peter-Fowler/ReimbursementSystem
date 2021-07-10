@@ -3,20 +3,21 @@ package web;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import creatable.Employee;
-import creatable.ReimbursementRequest;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 
+import creatable.Employee;
+import creatable.ReimbursementDecided;
 import system.ReimbursementServiceImpl;
 
-public class EmployeeView extends HttpServlet {
+public class EmployeeDecidedView extends HttpServlet {
 	
 	private ReimbursementServiceImpl rsi;
 	
@@ -33,27 +34,30 @@ public class EmployeeView extends HttpServlet {
 		
 		HttpSession session = req.getSession(false);
 		
-	//	req.getRequestDispatcher("/RemibusementRequestViewEmployee.html").forward(req, res);
+		req.getRequestDispatcher("/RemibusementRequestViewEmployee.html").forward(req, res);
 		
 		ObjectMapper om = new ObjectMapper();
 	
 	  Employee fred = (Employee) session.getAttribute("fred"); 
 
-	  List<ReimbursementRequest> requests = rsi.viewReimbursementRequestsByEmployee(fred);
+	  List<ReimbursementDecided> decided = rsi.getResolvedReimbursementRequests(fred);
 	  try {
-	  	String listToJson = om.writeValueAsString(requests);
-	  	
-	  	PrintWriter pw = res.getWriter();
+		  String listToJson = om.writeValueAsString(decided);
 		  
-	  	pw.println(listToJson);
-		 
-	  }catch(InvalidDefinitionException e) {
+		  PrintWriter pw = res.getWriter();
+		  
+		  pw.println(listToJson);
+		  
+	  }catch(JsonProcessingException e) {
+		  e.printStackTrace();
+	  }catch(IOException e) {
 		  e.printStackTrace();
 	  }
-	  for(ReimbursementRequest r : requests) {
+	  
+	  for(ReimbursementDecided r : decided) {
 		  System.out.println(r);
 	  }
 	  
-	  
 	}
+
 }

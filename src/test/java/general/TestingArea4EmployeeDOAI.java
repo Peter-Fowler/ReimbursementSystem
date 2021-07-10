@@ -20,8 +20,6 @@ class TestingArea4EmployeeDOAI {
 	ReimbursementServiceImpl rsi;
 	ReimbursementRequestDAOImpl requestTool;
 	ReimbursementDecidedDAOImpl decidedTool;
-	ReimbursementDecided decidedGlobal;
-	ReimbursementRequest requestGlobal;
 
 	@BeforeEach
 	void initEach() {
@@ -33,43 +31,43 @@ class TestingArea4EmployeeDOAI {
 	void setUp() throws Exception {
 		edaoi = new EmployeeDAOImpl();
 		rsi = new ReimbursementServiceImpl();
-
-		Employee fred = new Employee("Peter", "Fowler", "peter.fowler@revature.net", "programmer",
-				"big.boss@revature.net", false, "Password");
-		edaoi.save(fred);
-
-		Employee bigBoss = new Employee("Big", "Boss", "big.boss@revature.net", "CEO", null, true, "AdminPass");
-		rsi.registerEmployee(bigBoss);
+		/*
+		 * Employee fred = new Employee("Peter", "Fowler", "peter.fowler@revature.net",
+		 * "programmer", "big.boss@revature.net", false, "Password"); edaoi.save(fred);
+		 * 
+		 * Employee bigBoss = new Employee("Big", "Boss", "big.boss@revature.net",
+		 * "CEO", null, true, "AdminPass"); rsi.registerEmployee(bigBoss);
+		 */
 	}
 
-	@Test
-	void testEmployeeImpl() {
-		Employee fred = edaoi.get("peter.fowler@revature.net").remove(0);
-
-		System.out.println("before name test");
-
-		assertEquals("Peter", fred.getFirstName());
-
-		System.out.println("before name change");
-
-		fred.setFirstName("Steve");
-
-		edaoi.update(fred);
-
-		System.out.println("before name change test");
-
-		assertEquals("Steve", fred.getFirstName());
-
-		System.out.println("before password change");
-
-		fred.setPassword("NewP@ssW0rd");
-
-		edaoi.updataPassword(fred);
-
-		System.out.println("before password validation");
-
-		assertTrue(edaoi.validate("peter.fowler@revature.net", "NewP@ssW0rd"));
-	}
+	/*
+	 * @Test void testEmployeeImpl() { Employee fred =
+	 * edaoi.get("peter.fowler@revature.net").remove(0);
+	 * 
+	 * System.out.println("before name test");
+	 * 
+	 * assertEquals("Steve", fred.getFirstName());
+	 * 
+	 * System.out.println("before name change");
+	 * 
+	 * fred.setFirstName("Peter");
+	 * 
+	 * edaoi.update(fred);
+	 * 
+	 * System.out.println("before name change test");
+	 * 
+	 * assertEquals("Peter", fred.getFirstName());
+	 * 
+	 * System.out.println("before password change");
+	 * 
+	 * fred.setPassword("MilkAnd11s");
+	 * 
+	 * edaoi.updataPassword(fred);
+	 * 
+	 * System.out.println("before password validation");
+	 * 
+	 * assertTrue(edaoi.validate("peter.fowler@revature.net", "MilkAnd11s")); }
+	 */
 
 	@Test
 	void testSystemInsert() {
@@ -80,22 +78,19 @@ class TestingArea4EmployeeDOAI {
 
 		ReimbursementRequest request = rsi.getReimbursementRequests().remove(0);
 
-		requestGlobal = request;
-
 		assertEquals("peter.fowler@revature.net", request.getEmployeeEmail());
 
 		rsi.judgeReimbursementRequest(request, ceo, true);
 
 		ReimbursementDecided decided = rsi.viewReimbursementDecided().remove(0);
 
-		decidedGlobal = decided;
-
 		assertEquals(ceo.getEmail(), decided.getManagerEmail());
 
 		ArrayList<Employee> allEmp = rsi.viewAllEmployees();
 
 		Employee[] allEmpArr = new Employee[allEmp.size()];
-		allEmpArr = (Employee[]) allEmp.toArray(); //look into getting class and see if that allows java to cast to type Employee
+		allEmpArr = (Employee[]) allEmp.toArray(); // look into getting class and see if that allows java to cast to
+													// type Employee
 
 		if (allEmpArr[0].equals(ceo)) {
 			Employee temp = allEmpArr[0];
@@ -115,27 +110,25 @@ class TestingArea4EmployeeDOAI {
 
 	}
 
-	@AfterAll
-	void tearDown() {
-		requestTool = new ReimbursementRequestDAOImpl();
-		decidedTool = new ReimbursementDecidedDAOImpl();
-
-		requestGlobal = new ReimbursementRequest();
-		requestGlobal.setRequestID(1);
-
-		decidedGlobal = new ReimbursementDecided();
-		decidedGlobal.setRequestID(1);
-
-		decidedTool.delete(decidedGlobal);
-
-		requestTool.delete(requestGlobal);
-
-		Employee fred = new Employee("Peter", "Fowler", "peter.fowler@revature.net", "programmer",
-				"big.boss@revature.net", false);
-		edaoi.delete(fred);
-		Employee bigBoss = new Employee("Big", "Boss", "big.boss@revature.net", "CEO", null, true, "AdminPass");
-		edaoi.delete(bigBoss);
-
-	}
+	/*
+	 * @AfterAll void tearDown() { requestTool = new ReimbursementRequestDAOImpl();
+	 * decidedTool = new ReimbursementDecidedDAOImpl();
+	 * 
+	 * 
+	 * ReimbursementRequest request =
+	 * requestTool.get("peter.fowler@revature.net").remove(0);
+	 * 
+	 * ReimbursementDecided decided =
+	 * decidedTool.get("big.boss@revature.net").remove(0);
+	 * 
+	 * decidedTool.delete(decided);
+	 * 
+	 * requestTool.delete(request);
+	 * 
+	 * Employee fred = new Employee("Peter", "Fowler", "peter.fowler@revature.net",
+	 * "programmer", "big.boss@revature.net", false); edaoi.delete(fred); Employee
+	 * bigBoss = new Employee("Big", "Boss", "big.boss@revature.net", "CEO", null,
+	 * true, "AdminPass"); edaoi.delete(bigBoss); }
+	 */
 
 }

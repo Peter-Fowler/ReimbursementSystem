@@ -7,7 +7,7 @@ import creatable.ReimbursementRequest;
 
 public interface ReimbursementServiceLevelOne {
 
-	public ReimbursementRequest createReimbursementRequest(Employee fred, double amount, String description);
+	public void createReimbursementRequest(Employee fred, double amount, String description);
 	public List<ReimbursementRequest> getReimbursementRequests();
 	public List<ReimbursementDecided> getResolvedReimbursementRequests(Employee fred);
 	

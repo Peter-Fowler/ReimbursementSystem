@@ -49,12 +49,12 @@ public class LoginServlet extends HttpServlet {
 				  session.setAttribute("fred", fred);
 				  
 				  if(fred.isManagerStatus()) {
-					  page = "./ManagerPortal";
+					  page = "./ManagerHome.html";
 				  }else {
-					  page = "./Reimbursements";
+					  page = "./RemibusementRequestViewEmployee.html";
 				  }
 			  }else {
-				  page = "/login";
+				  page = "./login";
 			  
 			  }
 		  }

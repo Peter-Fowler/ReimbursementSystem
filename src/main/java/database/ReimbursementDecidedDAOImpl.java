@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import creatable.ReimbursementDecided;
@@ -28,11 +26,10 @@ public class ReimbursementDecidedDAOImpl implements SystemDAO<ReimbursementDecid
 				int decisionID = rs.getInt("decisionID");
 				int requestID = rs.getInt("RequestID");
 				String managerEmail = rs.getString("managerEmail");
-				Timestamp ts = rs.getTimestamp("dateDecided");
+				String date = rs.getString("dateDecided");
 				int approvedID = rs.getInt("decision");
 				if(approvedID == 1)
 					approved = true;
-				LocalDateTime date = ts.toLocalDateTime();
 				allReimDecided.add(new ReimbursementDecided(managerEmail, date, approved, decisionID, requestID));
 			}
 			return allReimDecided;
@@ -62,11 +59,10 @@ public class ReimbursementDecidedDAOImpl implements SystemDAO<ReimbursementDecid
 				int decisionID = rs.getInt("decisionID");
 				int requestID = rs.getInt("RequestID");
 				String managerEmail = rs.getString("managerEmail");
-				Timestamp ts = rs.getTimestamp("dateDecided");
+				String date = rs.getString("dateDecided");
 				int approvedID = rs.getInt("decision");
 				if(approvedID == 1)
 					approved = true;
-				LocalDateTime date = ts.toLocalDateTime();
 				reimDecided.add(new ReimbursementDecided(managerEmail, date, approved, decisionID, requestID));
 			}
 			return reimDecided;
@@ -93,7 +89,7 @@ public class ReimbursementDecidedDAOImpl implements SystemDAO<ReimbursementDecid
 			
 			ps.setInt(1, reimDecided.getRequestID());
 			ps.setString(2, reimDecided.getManagerEmail());
-			ps.setTimestamp(3, Timestamp.valueOf(reimDecided.getDate()));
+			ps.setString(3, reimDecided.getDate());
 			ps.setInt(4, approvedNum);
 			ps.setInt(5, reimDecided.getDecisionID());
 			
@@ -123,7 +119,7 @@ public class ReimbursementDecidedDAOImpl implements SystemDAO<ReimbursementDecid
 			
 			ps.setInt(1, reimDecided.getRequestID());
 			ps.setString(2, reimDecided.getManagerEmail());
-			ps.setTimestamp(3, Timestamp.valueOf(reimDecided.getDate()));
+			ps.setString(3, reimDecided.getDate());
 			ps.setInt(4, approvedNum);
 			ps.setInt(5, reimDecided.getDecisionID());
 			
@@ -156,7 +152,7 @@ public class ReimbursementDecidedDAOImpl implements SystemDAO<ReimbursementDecid
 			
 			ps.setInt(1, reimDecided.getRequestID());
 			ps.setString(2, reimDecided.getManagerEmail());
-			ps.setTimestamp(3, Timestamp.valueOf(reimDecided.getDate()));
+			ps.setString(3, reimDecided.getDate());
 			ps.setInt(4, approvedNum);
 			
 			success = ps.executeUpdate();
