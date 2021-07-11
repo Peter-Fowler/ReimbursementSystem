@@ -41,15 +41,16 @@ public class ReimbursementDecidedDAOImpl implements SystemDAO<ReimbursementDecid
 	}
 
 	@Override
-	public List<ReimbursementDecided> get(String decidedID) {
+	public List<ReimbursementDecided> get(String fredEmail) {
 		ArrayList<ReimbursementDecided> reimDecided = new ArrayList<ReimbursementDecided>();
-		String query = "SELECT decisionID, requestID, managerEmail, dateDecided, decision FROM reimbursementDecided WHERE decisionID = ?";
+        String query = "SELECT decisionID, requestID, managerEmail, dateDecided, decision from REIMBURSEMENTDECIDED "
+        		+ "where REQUESTID in (SELECT REQUESTID from REIMBURSEMENTREQUEST where EMPLOYEEEMAIL = ?)";
+
 		
 		try(Connection conn = ConnectionUtil.getConnection();
 				PreparedStatement ps = conn.prepareStatement(query)){
 			
-			int id = Integer.valueOf(decidedID);
-			ps.setInt(1, id);
+			ps.setString(1, fredEmail);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -70,7 +71,7 @@ public class ReimbursementDecidedDAOImpl implements SystemDAO<ReimbursementDecid
 		}catch(SQLException e) {
 			System.out.println("Failer to get list of reimbursement deided requests by ID " + e.getMessage());
 		}catch(NumberFormatException e) {
-			System.out.println(decidedID + " is not a valid number.");
+			System.out.println(fredEmail + " is not a valid email.");
 			System.out.println(e.getMessage());
 		}
 		return null;
@@ -146,9 +147,6 @@ public class ReimbursementDecidedDAOImpl implements SystemDAO<ReimbursementDecid
 		
 		try(Connection conn = ConnectionUtil.getConnection();
 				PreparedStatement ps = conn.prepareStatement(query)){
-			
-			System.out.println(reimDecided.getDecisionID() + " the DID " + reimDecided.getManagerEmail() + " the manEmail " + reimDecided.getRequestID() 
-			+ " the RID " + reimDecided.getDate() + " the date");
 			
 			ps.setInt(1, reimDecided.getRequestID());
 			ps.setString(2, reimDecided.getManagerEmail());

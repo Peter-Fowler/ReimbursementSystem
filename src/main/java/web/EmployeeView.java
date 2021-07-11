@@ -33,8 +33,6 @@ public class EmployeeView extends HttpServlet {
 		
 		HttpSession session = req.getSession(false);
 		
-	//	req.getRequestDispatcher("/RemibusementRequestViewEmployee.html").forward(req, res);
-		
 		ObjectMapper om = new ObjectMapper();
 	
 	  Employee fred = (Employee) session.getAttribute("fred"); 
@@ -50,10 +48,19 @@ public class EmployeeView extends HttpServlet {
 	  }catch(InvalidDefinitionException e) {
 		  e.printStackTrace();
 	  }
-	  for(ReimbursementRequest r : requests) {
-		  System.out.println(r);
-	  }
-	  
 	  
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		HttpSession session = req.getSession(false);
+		
+		Employee fred = (Employee) session.getAttribute("fred");
+		
+		if(fred != null) {
+			String amount = req.getParameter("amount");
+		}
+	}
+	
 }

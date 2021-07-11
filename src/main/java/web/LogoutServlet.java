@@ -15,6 +15,9 @@ public class LogoutServlet extends HttpServlet{
 		
 		res.setContentType("text/html");
 		HttpSession session = req.getSession(false);
+		
+		if(session != null) 
+			
 		session.invalidate();
 		
 		req.getRequestDispatcher("/LogoutPage.html").forward(req, res);
