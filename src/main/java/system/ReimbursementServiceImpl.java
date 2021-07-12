@@ -5,13 +5,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import creatable.Employee;
+import creatable.NewRequest;
 import creatable.ReimbursementDecided;
 import creatable.ReimbursementRequest;
 import database.EmployeeDAOImpl;
 import database.ReimbursementDecidedDAOImpl;
 import database.ReimbursementRequestDAOImpl;
 
-public class ReimbursementServiceImpl implements ReimbursementServiceLevelOne,  
+public class ReimbursementServiceImpl implements ReimbursementServiceLevelOne<Employee, NewRequest>,  
 ReimbursementServiceLevelTwo<ReimbursementRequest, ReimbursementDecided, Employee>{
 
 	ReimbursementRequestDAOImpl rrdaoi = new ReimbursementRequestDAOImpl();
@@ -23,11 +24,13 @@ ReimbursementServiceLevelTwo<ReimbursementRequest, ReimbursementDecided, Employe
 	
 	
 	@Override // In testing mode
-	public void createReimbursementRequest(Employee fred, double amount, String description) {
+	public void createReimbursementRequest(Employee fred, NewRequest newRequest) {
 		
 		String date = catchTime();
 		
-		ReimbursementRequest request = new ReimbursementRequest(fred.getEmail(), date, amount, description);
+		
+		
+		ReimbursementRequest request = new ReimbursementRequest(fred.getEmail(), date, newRequest.getAmount(), newRequest.getDescription());
 		
 		rrdaoi.save(request);
 	}
@@ -100,4 +103,9 @@ ReimbursementServiceLevelTwo<ReimbursementRequest, ReimbursementDecided, Employe
 		return now;
 	}
 
+	public ReimbursementRequest getNewRequest(Employee fred) {
+		String email = fred.getEmail();
+		
+		return rrdaoi.getNewRequest(email);
+	}
 }

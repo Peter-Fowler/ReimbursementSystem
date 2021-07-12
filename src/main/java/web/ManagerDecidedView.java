@@ -17,7 +17,7 @@ import creatable.Employee;
 import creatable.ReimbursementDecided;
 import system.ReimbursementServiceImpl;
 
-public class EmployeeDecidedView extends HttpServlet {
+public class ManagerDecidedView  extends HttpServlet {
 	
 	private ReimbursementServiceImpl rsi;
 	
@@ -38,7 +38,7 @@ public class EmployeeDecidedView extends HttpServlet {
 	
 	  Employee fred = (Employee) session.getAttribute("fred"); 
 
-	  List<ReimbursementDecided> decided = rsi.getResolvedReimbursementRequests(fred);
+	  List<ReimbursementDecided> decided = rsi.viewReimbursementDecided();
 	  
 	  System.out.println(decided);
 	  
@@ -60,5 +60,7 @@ public class EmployeeDecidedView extends HttpServlet {
 	  }
 	  
 	}
+
+
 
 }

@@ -19,7 +19,7 @@ class Requests {
 
     toJSON(){
         return{
-            date: this._date,
+            description: this._description,
             amount: this._amount,
         };
     }
@@ -159,8 +159,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
 newRequestButton.addEventListener('click', () =>{
     const newAmount = document.querySelector('#amount').value;
+
     if(newAmount){
-        const newRequestForm = new Requests(newAmount, document.querySelector('#description'));
+
+        const newDescription = document.querySelector('#description').value;
+
+        const newRequestForm = new Requests(newAmount, newDescription);
+
         fetch('http://localhost:8080/ReimbursementSystem/Reimbursements', {
             method: 'Post',
             header: {
@@ -176,6 +181,8 @@ newRequestButton.addEventListener('click', () =>{
                 newRequestWithID.date, newRequestWithID.amount, newRequestWithID.description,
                 'Pending'));
 
+                console.log('')
+
                 renderRequestTableData(requestContainer);
 
                 document.querySelector('#amount').value = '';
@@ -183,7 +190,7 @@ newRequestButton.addEventListener('click', () =>{
                 document.querySelector('#description').value = '';
         });
     }
-})
+ })
 
 
 

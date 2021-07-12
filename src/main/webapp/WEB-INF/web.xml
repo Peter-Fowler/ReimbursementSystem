@@ -26,6 +26,11 @@
   </servlet>
   
   <servlet>
+  	<servlet-name>ManagerDecidedView</servlet-name>
+  	<servlet-class>web.ManagerDecidedView</servlet-class>
+  </servlet>
+  
+  <servlet>
   	<servlet-name>LogoutPage</servlet-name>
   	<servlet-class>web.LogoutServlet</servlet-class>
   </servlet>
@@ -48,6 +53,11 @@
   <servlet-mapping>
 	<servlet-name>ManagerView</servlet-name>
 	<url-pattern>/ManagerPortal</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ManagerDecidedView</servlet-name>
+  	<url-pattern>/ManagerPortal2</url-pattern>
   </servlet-mapping>
 	
   <servlet-mapping>

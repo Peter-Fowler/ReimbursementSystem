@@ -100,12 +100,13 @@ class Decided {
 }
 
 class RequestDisision{
-    constructor(employeeEmailRD, dateRD, amountRD, descriptionRD, statusRD){
+    constructor(employeeEmailRD, dateRD, amountRD, descriptionRD, statusRD, managerEmailRD){
         this._employeeEmailRD = employeeEmailRD;
         this._dateRD = dateRD;
         this._amountRD = amountRD;
         this._descriptionRD = descriptionRD;
         this._statusRD = statusRD;
+        this._managerEmailRD = managerEmailRD;
     }
     get employeeEmailRD(){
         return this._employeeEmailRD;
@@ -122,6 +123,9 @@ class RequestDisision{
     get statusRD(){
         return this._statusRD
     }
+    get managerEmailRD(){
+        return this._managerEmail
+    }
     set employeeEmailRD(email){
         this._employeeEmailRD = email;
     }
@@ -137,16 +141,152 @@ class RequestDisision{
     set statusRD(status){
         this._statusRD = status;
     }
+    set managerEmailRD(email){
+        this._managerEmail = email;
+    }
 }
 
-const testRequest = new Requests('peter.fowler@revature.net', 
-    '03-JUN-21', 200.86, 'An example to make sure everything works', 42);
+
+let requestDisisionList = [];
+
+const appRoot = document.querySelector('#wholeWindow');
+
+const disisionContainer = appRoot.querySelector('#reimbursementTableRow');
+
+const newRequestButton = document.querySelector('#newRequestButton');
     
-    console.log(testRequest);
+const mergeRequestDesision = (req, des) => {
 
-    const testDecided = new Decided('big.boss@revature.net',
-    '03-JUN-21', true, 18, 42);
+    req.forEach(a => {
+        let checkStatus = false;
 
-    console.log(testDecided);
+        for(let i = 0; i < des.length; i++) {
+
+            if(a.requestID == des[i].requestID){
+
+                let status = des[i].approved ? 'Approved':'Declined';
+
+                console.log(`request: ${a.email} ${a.date} ${a.amount} ${a.description}`);
+                console.log(`decidion: ${des[i].approved} ${des[i].managerEmail}`);
+
+                requestDisisionList.push(new RequestDisision(a.email, a.date, a.amount, a.description,
+                    status, des[i].managerEmail));
+
+                    checkStatus = true;
+
+                    break;
+                    
+            }
+        }
+        if(!checkStatus){
+            console.log(`request: ${a.email} ${a.date} ${a.amount} ${a.description}`);
+            requestDisisionList.push(new RequestDisision(a.employeeEmail, a.date, a.amount, a.description,
+                'Pending', 'Pending'));
+        }
+    });
+
+    }
+
+
+
+    const renderRequestTableData = (container) => {
+        container.innerHTML = '';
+        requestDisisionList.forEach(r => {
+            const newDesision = document.createElement('tr');
+            const rEmpEmail = document.createElement('td');
+            const rDate = document.createElement('td');
+            const rAmount = document.createElement('td');
+            const rDescription = document.createElement('td');
+            const rStatus = document.createElement('td');
+            const rManager = document.createElement('tr');
+
+            rEmpEmail.innerText = r.employeeEmailRD
+            rDate.innerText = r.dateRD;
+            rAmount.innerText = r.amountRD;
+            rDescription.innerText = r.descriptionRD;
+            rStatus.innerText = r.statusRD;
+            rManager.innerText = r.managerEmailRD
+
+            newDesision.append(rEmpEmail);
+            newDesision.append(rDate);
+            newDesision.append(rAmount);
+            newDesision.append(rDescription);
+            newDesision.append(rStatus);
+            newDesision.append(rManager);
+            
+            container.append(newDesision);
+        });
+    }
+    
+    renderRequestTableData(disisionContainer);
+ 
+document.addEventListener('DOMContentLoaded', () => {
+    ;(async () => {
+        console.log('after the DOMContentLoaded')
+       
+        const resp1 = await fetch(
+            'http://localhost:8080/ReimbursementSystem/ManagerPortal'
+            )
+        const reims = await resp1.json()
+
+        ;console.log(reims);
+
+        const resp2 = await fetch(
+              'http://localhost:8080/ReimbursementSystem/ManagerPortal2'
+            )
+        const resolved = await resp2.json()
+
+        console.log(resolved);
+
+      //  <!--requestDisisionList = [ ...reims, ...resolved ] -->
+        
+        
+      //  console.log(requestDisisionList)
+
+        mergeRequestDesision(reims, resolved);
+
+        console.log('after populating the master list')
+
+        console.log(requestDisisionList);
+
+        renderRequestTableData(disisionContainer);
+
+        })()
+    });
+        
+newRequestButton.addEventListener('click', () =>{
+    const newAmount = document.querySelector('#amount').value;
+
+    if(newAmount){
+
+        const newDescription = document.querySelector('#description').value;
+
+        const newRequestForm = new Requests(newAmount, newDescription);
+
+        fetch('http://localhost:8080/ReimbursementSystem/Reimbursements', {
+            method: 'Post',
+            header: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newRequestForm),
+        })
+        .then(resp => resp.json())
+
+        .then((newRequestWithID) => {
+
+            requestDisisionList.push(new RequestDisision(newRequestWithID.employeeEmail, 
+                newRequestWithID.date, newRequestWithID.amount, newRequestWithID.description,
+                'Pending', 'Pending'));
+
+                console.log('')
+
+                renderRequestTableData(disisionContainer);
+
+                document.querySelector('#amount').value = '';
+
+                document.querySelector('#description').value = '';
+        });
+    }
+ })
 
 
