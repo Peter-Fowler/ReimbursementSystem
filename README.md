@@ -7,7 +7,15 @@ eventual approval or denial of financial reimbursement through an online portal.
 
 ## Technologies Used
 
-- Java?
+- Java
+- JavaScript
+- CSS
+- HTML
+- JUnit
+- Spring Tool Suite 4
+- VS Code
+- AWS RDS
+- Git and GitHub
 
 ## Features
 
